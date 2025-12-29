@@ -60,7 +60,7 @@ For a "Diamond Tier" experience, the user should be notified that the transactio
 
 <button
   onClick={() => executeGhostTransfer(recipient, 10)}
-  className="w-full h-16 bg-gradient-to-r from-fuchsia-600 to-purple-700 rounded-2xl shadow-xl"
+  className="w-full h-16 bg-linear-to-r from-fuchsia-600 to-purple-700 rounded-2xl shadow-xl"
 >
    Confirm Gasless Transfer
 </button>
