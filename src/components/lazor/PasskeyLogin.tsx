@@ -2,10 +2,10 @@
 "use client";
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Fingerprint, Loader2, ChevronRight, ShieldAlert } from 'lucide-react';
+import { Fingerprint, Loader2, ChevronRight, ShieldAlert, CheckCircle2 } from 'lucide-react';
 import { useWalletStore } from '@/store/useWalletStore';
-
 import { useWallet } from '@lazorkit/wallet';
+
 export default function PasskeyLogin() {
     const { setWallet, setStatus, status } = useWalletStore();
     const [localError, setLocalError] = useState<string | null>(null);
@@ -16,21 +16,33 @@ export default function PasskeyLogin() {
         setStatus('connecting');
 
         try {
-
-            const walletInfo = await connect({ feeMode: 'paymaster' });
-            if (walletInfo && walletInfo.address) {
-                setWallet(walletInfo.address);
+            // 📡 Trigger the native Biometric popup
+            const walletInfo = await connect({ feeMode: 'paymaster' });         
+            const address = (walletInfo as any)?.address;
+            if (address) {
+                setWallet(address);
                 setStatus('connected');
-                console.log("Sovereign Identity Verified:", walletInfo.address);
+                console.log("Sovereign Identity Verified:", address);
+            } else {
+                throw new Error("Address_Not_Found");
             }
+
         } catch (err: any) {
             console.error("Handshake Failed:", err);
-            setLocalError("Handshake_Rejected");
+
+            // Handle common biometric rejection errors
+            if (err.name === 'NotAllowedError' || err.message?.includes("cancel")) {
+                setLocalError("Handshake_Cancelled");
+            } else {
+                setLocalError("Handshake_Protocol_Error");
+            }
+
             setStatus('error');
         }
     };
 
     return (
+        // ... (Keep the rest of your beautiful UI code exactly the same)
         <div className="flex flex-col items-center gap-6 w-full">
             <motion.button
                 whileHover={{ scale: 1.05 }}
@@ -48,7 +60,7 @@ export default function PasskeyLogin() {
                     <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/[0.03] to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
 
                     <div className="flex items-center gap-4 relative z-10">
-                        <div className="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center">
+                        <div className="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center relative">
                             {status === 'connecting' ? (
                                 <Loader2 className="animate-spin text-[#f83a99]" />
                             ) : (
@@ -60,13 +72,13 @@ export default function PasskeyLogin() {
                                 {status === 'connecting' ? 'Verifying_Hardware...' : 'Identity_Verification'}
                             </span>
                             <span className="text-sm font-[900] text-white uppercase tracking-widest italic">
-                                {status === 'connecting' ? 'Scanning Passkey' : 'Initialize Wallet'}
+                                {status === 'connecting' ? 'Check your device' : 'Initialize Wallet'}
                             </span>
                         </div>
                     </div>
 
                     <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center text-black group-hover:bg-[#ff3e3e] group-hover:text-white transition-all relative z-10 shadow-lg">
-                        <ChevronRight size={20} strokeWidth={3} />
+                        {status === 'connected' ? <CheckCircle2 size={20} /> : <ChevronRight size={20} strokeWidth={3} />}
                     </div>
                 </div>
             </motion.button>

@@ -11,7 +11,7 @@ import PasskeyLogin from './PasskeyLogin';
 
 export default function SovereignLanding() {
     return (
-        <div className="relative w-full h-screen flex flex-col overflow-hidden bg-[#020102]">
+        <div className="relative w-full  flex flex-col bg-[#020102]">
 
             {/* --- 1. THE SOLAR NEURAL ATMOSPHERE --- */}
             <div className="solar-flow opacity-70 pointer-events-none" />
