@@ -44,4 +44,40 @@ export const useWalletStore = create()(
 
 Implement a global initializer that runs once when the app starts. This checks if the user's biometric link is still valid.
 
-File: components/AppInitializer.tsx
+**File:** `components/AppInitializer.tsx`
+
+```ts
+import { useEffect } from "react";
+import { useWalletStore } from "@/store/useWalletStore";
+import { getExistingWallet } from "@lazorkit/wallet";
+
+export default function AppInitializer() {
+  const { setWallet } = useWalletStore();
+
+  useEffect(() => {
+    const recoverSession = async () => {
+      /**
+       * 🚀 CORE PROTOCOL: getExistingWallet
+       * This method checks the device's internal storage
+       * for a previously registered LazorKit Passkey.
+       */
+      const savedWallet = await getExistingWallet();
+
+      if (savedWallet) {
+        setWallet(savedWallet.address);
+        console.log("Neural Session Restored:", savedWallet.address);
+      }
+    };
+
+    recoverSession();
+  }, [setWallet]);
+
+  return null; // This is a logic-only component
+}
+```
+
+## 🛡 Security Protocol
+
+- \*\* Hardware Locked: Even if someone steals the localStorage data (the Public Key), they cannot sign transactions. The actual private key remains inside the physical hardware and requires a biometric scan to activate.
+
+- \*\* Auto-Revocation: If a user deletes their Passkey from their OS settings, the getExistingWallet() call will return null, protecting the application state
