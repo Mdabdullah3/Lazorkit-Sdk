@@ -12,7 +12,7 @@ export default function Home() {
   const { address, activeTab, selectedDoc } = useWalletStore();
 
   return (
-    <main className="min-h-screen w-full relative selection:bg-red-500/30">
+    <main className="w-full relative selection:bg-red-500/30">
       <div className="solar-flow" /> {/* The New Warm Background */}
 
       <AnimatePresence mode="wait">
