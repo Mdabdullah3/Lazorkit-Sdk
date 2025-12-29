@@ -1,36 +1,89 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 💎 LazorKit Sovereign Starter Kit
 
-## Getting Started
+### High-Fidelity Technical Template for Passwordless Solana Onboarding
 
-First, run the development server:
+LazorKit Sovereign is a **premium, production-ready starter template** designed to help developers integrate hardware-level biometric authentication and gasless transactions into the Solana ecosystem.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+Built with the "Diamond Sovereign" design language, this kit transforms complex blockchain interactions into a seamless, high-fidelity experience that eliminates the need for seed phrases and traditional wallet installations.
+
+**Live Demo:** [YOUR_VERCEL_LINK_HERE]
+**Technical Briefing:** [YOUR_MEDIUM_OR_X_ARTICLE_LINK]
+
+---
+
+## 🚀 Key Technical Features
+
+- **Biometric Handshake (Passkey Auth):** Native integration with the device's Secure Enclave (FaceID/TouchID) to create cryptographic Solana identities without passwords or seed phrases.
+- **Ghost Transactions (Gasless Relay):** A pre-configured module demonstrating how to sponsor user transaction fees, enabling a zero-SOL onboarding experience.
+- **Neural Persistence:** State-driven session management using Zustand with local persistence to maintain biometric links across device restarts.
+- **Integrated Documentation Engine:** A built-in markdown-to-react rendering system that provides high-fidelity technical tutorials directly inside the application.
+
+---
+
+## 🛠 Elite Tech Stack
+
+I chose this specific stack to provide the highest standard of Developer Experience (DX) and Performance:
+
+- **Framework:** Next.js 15 (App Router) + React 19 (Experimental features)
+- **SDK:** [@lazorkit/wallet](https://docs.lazorkit.com/) for core biometric protocols.
+- **State Engine:** Zustand (Lightweight & Modular)
+- **Motion:** Framer Motion (Liquid UI transitions & Refractive animations)
+- **Styling:** Tailwind CSS v4 (Diamond Sovereign Design System)
+- **Chain Logic:** @solana/web3.js & @coral-xyz/anchor
+
+---
+
+## 📂 Project Architecture
+
+```text
+lazor-sovereign-kit/
+├── app/                  # Next.js App Router (UI Stages)
+├── components/           # Atomic Design UI Components
+│   └── lazor/            # Core SDK Logic Components
+├── docs/                 # 📚 Technical Step-by-Step Tutorials
+├── lib/                  # SDK Configuration & Constants
+├── store/                # Zustand State (Neural Persistence)
+└── .npmrc                # Optimized Build Configuration
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 📦 Installation & Local Deployment
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. **Clone the Identity:**
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+   git clone https://github.com/Mdabdullah3/XandOS
+```
 
-## Learn More
+2. **Initialize Environment:**
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+   npm install
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 📦 Installation & Local Deployment
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+1. **Clone the Identity:**
 
-## Deploy on Vercel
+```bash
+   git clone https://github.com/Mdabdullah3/XandOS
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+2. **Initialize Environment:**
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+   npm install
+```
+
+3. **Configure Environment:**
+   Create a .env.local file and add your App ID from the LazorKit dashboard:
+
+```env
+   NEXT_PUBLIC_LAZOR_APP_ID=your_id_here
+```
+## 📚 Technical Tutorials Included
+
+Explore our deep-dive guides for developers:
+
+- [01. Implementing the Biometric Handshake](./docs/01-biometric-handshake.md)
+- [02. Executing Ghost (Gasless) Transactions](./docs/02-ghost-transactions.md)
+- [03. Managing Neural Persistence](./docs/03-neural-persistence.md)
