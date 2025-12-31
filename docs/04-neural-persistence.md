@@ -33,7 +33,7 @@ export const useWalletStore = create()(
       disconnect: () => set({ address: null, status: "idle" }),
     }),
     {
-      name: "sovereign-wallet-session", // Unique storage key
+      name: "wallet-session", // Unique storage key
       storage: createJSONStorage(() => localStorage),
     }
   )
