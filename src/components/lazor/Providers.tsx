@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-require-imports */
 "use client";
 import React, { useEffect, useState } from "react";
 import { LazorkitProvider } from "@lazorkit/wallet";
@@ -6,21 +7,20 @@ export function Providers({ children }: { children: React.ReactNode }) {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    setMounted(true);
-
-    // Polyfill Buffer (Solana SDK often requires this)
-    if (typeof window !== "undefined" && !window.Buffer) {
-      import("buffer").then((buffer) => {
-        window.Buffer = buffer.Buffer;
-      });
+    // Standard Polyfill for Solana Web3.js
+    if (typeof window !== "undefined") {
+      const { Buffer } = require("buffer");
+      window.Buffer = Buffer;
     }
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setMounted(true);
   }, []);
 
-  // Return a dark placeholder while the client is mounting
-  if (!mounted) return <div className="bg-[#010103] min-h-screen w-full"></div>;
+  if (!mounted) return <div className="bg-[#010103] min-h-screen w-full" />;
 
   return (
     <LazorkitProvider
+      // ✅ OFFICIAL DEFAULTS FROM YOUR DOCS
       rpcUrl="https://api.devnet.solana.com"
       portalUrl="https://portal.lazor.sh"
       paymasterConfig={{
