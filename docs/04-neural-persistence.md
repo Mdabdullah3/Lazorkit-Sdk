@@ -67,12 +67,12 @@ export default function AppInitializer() {
     recoverSession();
   }, [setWallet]);
 
-  return null; 
+  return null;
 }
 ```
 
 ## 🛡 Security Protocol
 
-- \*\* Hardware Locked: Even if someone steals the localStorage data (the Public Key), they cannot sign transactions. The actual private key remains inside the physical hardware and requires a biometric scan to activate.
+- Hardware Locked: Even if someone steals the localStorage data (the Public Key), they cannot sign transactions. The actual private key remains inside the physical hardware and requires a biometric scan to activate.
 
-- \*\* Auto-Revocation: If a user deletes their Passkey from their OS settings, the getExistingWallet() call will return null, protecting the application state
+- Auto-Revocation: If a user deletes their Passkey from their OS settings, the getExistingWallet() call will return null, protecting the application state
