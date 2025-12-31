@@ -4,67 +4,7 @@ import { useWalletStore } from '@/store/useWalletStore';
 import { ArrowLeft, Zap, ShieldCheck, Check, Copy, Terminal } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useState } from 'react';
-
-const DOC_DATA: any = {
-    "setup": {
-        title: "Core Initialization",
-        subtitle: "Infrastructure Setup",
-        description: "Deploy the foundational logic required to bridge your Next.js application with the LazorKit secure enclave.",
-        steps: [
-            {
-                head: "01. Dependency Deployment",
-                body: "Install the core biometric wallet package and Solana's web3.js library to enable on-chain interactions.",
-                code: "npm install @lazorkit/wallet @solana/web3.js"
-            },
-            {
-                head: "02. Environment Configuration",
-                body: "Define your unique Application ID. This link ensures your dApp is authorized to request biometric handshakes.",
-                code: "// .env.local\nNEXT_PUBLIC_LAZOR_APP_ID=your_id_here"
-            }
-        ]
-    },
-    "passkey": {
-        title: "Biometric Handshake",
-        subtitle: "Passwordless Onboarding",
-        description: "Replace the friction of seed phrases with hardware-level FaceID/Fingerprint security.",
-        steps: [
-            {
-                head: "01. Handshake Invocation",
-                body: "Trigger the native browser WebAuthn prompt to generate a new Solana identity via the device's Secure Enclave.",
-                code: "import { createPasskeyWallet } from '@lazorkit/wallet';\n\nconst wallet = await createPasskeyWallet({\n  appId: process.env.NEXT_PUBLIC_LAZOR_APP_ID,\n  network: 'devnet'\n});"
-            },
-            {
-                head: "02. Identity Synchronization",
-                body: "Map the returned public key to your application's global state for immediate session activation.",
-                code: "setWallet(wallet.address);\nconsole.log('Sovereign Identity:', wallet.address);"
-            }
-        ]
-    },
-    "gasless": {
-        title: "Ghost Transactions",
-        subtitle: "Fee Sponsorship Protocol",
-        description: "Allow users to interact with Solana with 0 SOL balance. You sponsor the fees; they provide the signatures.",
-        steps: [
-            {
-                head: "01. Relay Execution",
-                body: "Send instructions to the LazorKit Relay. The relayer pays the SOL fee and submits the transaction to the network.",
-                code: "import { sendGaslessTransaction } from '@lazorkit/wallet';\n\nconst signature = await sendGaslessTransaction({\n  to: 'Destination_Address',\n  amount: 0.1,\n  token: 'USDC'\n});"
-            }
-        ]
-    },
-    "persistence": {
-        title: "Neural Persistence",
-        subtitle: "Multi-Device Sessions",
-        description: "Implement session recovery logic so users don't have to re-create their wallet on every visit.",
-        steps: [
-            {
-                head: "01. Session Recovery",
-                body: "Use the SDK's persistence layer to detect existing biometric keys stored on the device's hardware.",
-                code: "import { getExistingWallet } from '@lazorkit/wallet';\n\nuseEffect(() => {\n  const wallet = await getExistingWallet();\n  if (wallet) setWallet(wallet.address);\n}, []);"
-            }
-        ]
-    }
-};
+import { DOC_DATA } from '@/lib/data';
 
 export default function DocViewer() {
     const { selectedDoc, setSelectedDoc, setActiveTab } = useWalletStore();
