@@ -10,18 +10,13 @@ export default function PasskeyLogin() {
     const { setWallet, setStatus, status } = useWalletStore();
     const { connect, isConnecting } = useWallet();
     const [error, setError] = useState<string | null>(null);
-
+    // HANDLE AUTHENTICATION FLOW WITH PASSKEY (WEBAUTHN) PROTOCOL
     const handleAuth = async () => {
         setError(null);
         setStatus('connecting');
-
         try {
-            // 📡 Trigger official biometric handshake
             const walletInfo = await connect({ feeMode: 'paymaster' });
-
-            // Handle the address mapping from the SDK response
             const address = (walletInfo as any)?.address || (walletInfo as any)?.smartWallet;
-
             if (address) {
                 setWallet(address);
                 setStatus('connected');
@@ -35,7 +30,6 @@ export default function PasskeyLogin() {
 
     return (
         <div className="flex flex-col items-center gap-6 w-full max-w-sm mx-auto">
-
             <motion.button
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
@@ -43,17 +37,10 @@ export default function PasskeyLogin() {
                 disabled={isConnecting}
                 className="relative w-full group"
             >
-                {/* 1. THE PRISM BORDER (Cyan via White to Fuchsia) */}
                 <div className="absolute -inset-[1.5px] bg-linear-to-r from-[#00f2ff] via-white to-[#ff3e3e] rounded-full opacity-20 group-hover:opacity-100 transition-opacity duration-500 blur-[2px]" />
-
-                {/* 2. THE MAIN BODY */}
                 <div className="relative px-8 py-6 bg-[#050508] border border-white/10 rounded-full flex items-center justify-between shadow-2xl overflow-hidden">
-
-                    {/* Refractive Light Sweep */}
                     <div className="absolute inset-0 bg-linear-to-r from-transparent via-white/3 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
-
                     <div className="flex items-center gap-4 relative z-10">
-                        {/* Icon HUD */}
                         <div className="w-12 h-12 rounded-full bg-white/3 border border-white/10 flex items-center justify-center">
                             <AnimatePresence mode="wait">
                                 {isConnecting ? (
@@ -67,8 +54,6 @@ export default function PasskeyLogin() {
                                 )}
                             </AnimatePresence>
                         </div>
-
-                        {/* Labeling */}
                         <div className="text-left">
                             <span className="block text-[8px] font-black text-white/30 uppercase tracking-[0.4em] mb-0.5 italic">
                                 {isConnecting ? 'Verifying_Hardware' : 'Secure_Handshake'}
@@ -78,15 +63,11 @@ export default function PasskeyLogin() {
                             </span>
                         </div>
                     </div>
-
-                    {/* Action Indicator */}
                     <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center text-black group-hover:bg-[#ff3e3e] group-hover:text-white transition-all shadow-lg relative z-10">
                         {status === 'connected' ? <CheckCircle2 size={18} strokeWidth={3} /> : <ChevronRight size={20} strokeWidth={3} />}
                     </div>
                 </div>
             </motion.button>
-
-            {/* 3. ERROR FEEDBACK HUD */}
             <AnimatePresence>
                 {error && (
                     <motion.div
@@ -100,7 +81,6 @@ export default function PasskeyLogin() {
                     </motion.div>
                 )}
             </AnimatePresence>
-
         </div>
     );
 }

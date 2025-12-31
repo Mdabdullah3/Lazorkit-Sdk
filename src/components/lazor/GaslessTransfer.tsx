@@ -7,10 +7,13 @@ import { Send, Zap, Loader2, CheckCircle, AlertTriangle, ExternalLink } from 'lu
 
 export default function GaslessTransfer() {
     const { signAndSendTransaction, smartWalletPubkey } = useWallet();
+    // State Hooks
     const [loading, setLoading] = useState(false);
     const [recipient, setRecipient] = useState("");
     const [txSig, setTxSig] = useState<string | null>(null);
     const [error, setError] = useState<string | null>(null);
+
+    // HANDLE GASLESS TRANSFER VIA RELAY PROTOCOL
 
     const handleTransfer = async () => {
         if (!recipient.trim()) return setError("Destination_Required");
@@ -46,7 +49,7 @@ export default function GaslessTransfer() {
                     <span className="text-[9px] font-black text-white/30 uppercase tracking-[0.4em]">Gasless_Transmission_v1</span>
                 </div>
             </div>
-
+            {" /* TRANSFER FORM */ "}
             <div className="space-y-6">
                 <div className="space-y-3">
                     <label className="text-[10px] font-black text-white/30 uppercase tracking-[0.3em] ml-2 italic">Recipient_Endpoint</label>

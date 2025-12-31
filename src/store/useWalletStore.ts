@@ -1,13 +1,12 @@
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
 
-// 1. DEFINE THE FULL INTERFACE
+// DEFINE THE FULL INTERFACE
 interface WalletState {
   address: string | null;
   status: "idle" | "connecting" | "connected" | "error";
   activeTab: "dashboard" | "guides";
-  selectedDoc: string | null; // Tracks which tutorial is open
-
+  selectedDoc: string | null;
   // ACTIONS
   setWallet: (address: string) => void;
   setStatus: (status: "idle" | "connecting" | "connected" | "error") => void;
@@ -16,7 +15,7 @@ interface WalletState {
   disconnect: () => void;
 }
 
-// 2. CREATE THE STORE
+//  CREATE THE STORE
 export const useWalletStore = create<WalletState>()(
   persist(
     (set) => ({
@@ -39,7 +38,7 @@ export const useWalletStore = create<WalletState>()(
         }),
     }),
     {
-      name: "sovereign-wallet-storage",
+      name: "wallet-storage",
       storage: createJSONStorage(() => localStorage),
     }
   )

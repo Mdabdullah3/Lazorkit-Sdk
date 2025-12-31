@@ -17,10 +17,9 @@ export function Providers({ children }: { children: React.ReactNode }) {
   }, []);
 
   if (!mounted) return <div className="bg-[#010103] min-h-screen w-full" />;
-
+  // Lazorkit Provider with Devnet and Paymaster Config
   return (
     <LazorkitProvider
-      // ✅ OFFICIAL DEFAULTS FROM YOUR DOCS
       rpcUrl="https://api.devnet.solana.com"
       portalUrl="https://portal.lazor.sh"
       paymasterConfig={{

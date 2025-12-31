@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import { useWalletStore } from '@/store/useWalletStore';
-import { ArrowLeft, Zap, ShieldCheck, Cpu, Code2, Check, Database, Copy, Terminal } from 'lucide-react';
+import { ArrowLeft, Zap, ShieldCheck, Check, Copy, Terminal } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useState } from 'react';
 
@@ -94,7 +94,7 @@ export default function DocViewer() {
                     <div className="p-2.5 rounded-xl bg-cyan-500/10 border border-cyan-500/20 group-hover:bg-cyan-500 group-hover:text-black transition-all">
                         <ArrowLeft size={18} />
                     </div>
-                    <span className="text-[11px] font-[900] uppercase tracking-[0.4em] italic">De-initialize_Audit</span>
+                    <span className="text-[11px] font-black uppercase tracking-[0.4em] italic">De-initialize_Audit</span>
                 </button>
                 <div className="flex items-center gap-4">
                     <div className="px-4 py-1.5 rounded-full border border-white/10 bg-white/5 text-[9px] font-black uppercase tracking-widest text-white/40">
@@ -113,7 +113,7 @@ export default function DocViewer() {
                     <div className="flex items-center gap-3 text-fuchsia-500 font-black text-[11px] tracking-[0.6em] uppercase italic">
                         <Zap size={16} className="animate-pulse" /> {doc.subtitle}
                     </div>
-                    <h2 className="text-6xl md:text-8xl font-[900] italic text-white uppercase tracking-tighter leading-none drop-shadow-2xl">
+                    <h2 className="text-6xl md:text-8xl font-black italic text-white uppercase tracking-tighter leading-none drop-shadow-2xl">
                         {doc.title}
                     </h2>
                     <p className="text-white/40 text-sm md:text-xl max-w-3xl font-medium uppercase tracking-tight leading-relaxed">
@@ -135,7 +135,7 @@ export default function DocViewer() {
                     >
                         <div className="lg:w-1/3 space-y-6">
                             <div className="flex items-center gap-4">
-                                <div className="w-10 h-10 rounded-2xl bg-cyan-500 text-black flex items-center justify-center font-[900] text-sm shadow-[0_0_20px_rgba(0,242,255,0.4)]">
+                                <div className="w-10 h-10 rounded-2xl bg-cyan-500 text-black flex items-center justify-center font-black text-sm shadow-[0_0_20px_rgba(0,242,255,0.4)]">
                                     0{i + 1}
                                 </div>
                                 <h4 className="text-xl font-black text-white uppercase italic tracking-tighter">{step.head}</h4>
@@ -159,7 +159,7 @@ export default function DocViewer() {
                             </div>
                             {/* CODE BLOCK */}
                             <div className="relative overflow-hidden rounded-[30px] border border-white/10 bg-black/60 p-8 shadow-2xl group-hover:border-cyan-500/30 transition-all duration-500">
-                                <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/5 to-transparent pointer-events-none" />
+                                <div className="absolute inset-0 bg-linear-to-br from-cyan-500/5 to-transparent pointer-events-none" />
                                 <pre className="font-mono text-[11px] md:text-xs leading-relaxed text-cyan-400 overflow-x-auto no-scrollbar">
                                     <code>{step.code}</code>
                                 </pre>
@@ -170,17 +170,17 @@ export default function DocViewer() {
             </div>
 
             {/* 4. FINAL VALIDATION BAR */}
-            <div className="p-14 rounded-[60px] bg-gradient-to-r from-emerald-500/10 via-emerald-500/5 to-transparent border border-emerald-500/20 flex flex-col lg:flex-row justify-between items-center gap-10 shadow-2xl">
+            <div className="p-14 rounded-[60px] bg-linear-to-r from-emerald-500/10 via-emerald-500/5 to-transparent border border-emerald-500/20 flex flex-col lg:flex-row justify-between items-center gap-10 shadow-2xl">
                 <div className="flex items-center gap-6">
                     <div className="w-16 h-16 rounded-3xl bg-emerald-500/20 flex items-center justify-center text-emerald-500 border border-emerald-500/40">
                         <ShieldCheck size={32} />
                     </div>
                     <div className="space-y-1">
-                        <h5 className="text-white font-[900] uppercase italic tracking-tighter text-2xl">Handshake_Verified</h5>
+                        <h5 className="text-white font-black uppercase italic tracking-tighter text-2xl">Handshake_Verified</h5>
                         <p className="text-[11px] text-emerald-400/60 font-bold uppercase tracking-[0.2em]">This module is production-ready for the Solana Devnet cluster.</p>
                     </div>
                 </div>
-                <button className="w-full lg:w-auto px-12 py-5 bg-emerald-500 text-black font-[900] uppercase text-[11px] tracking-[0.3em] rounded-2xl shadow-[0_20px_40px_rgba(16,185,129,0.3)] hover:scale-[1.05] transition-all">
+                <button className="w-full lg:w-auto px-12 py-5 bg-emerald-500 text-black font-black uppercase text-[11px] tracking-[0.3em] rounded-2xl shadow-[0_20px_40px_rgba(16,185,129,0.3)] hover:scale-[1.05] transition-all">
                     Initialize Project
                 </button>
             </div>

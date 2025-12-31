@@ -1,24 +1,22 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
-import React from 'react';
 import { useWalletStore } from '@/store/useWalletStore';
 import { BookOpen, ChevronRight, Binary, Fingerprint, Zap } from 'lucide-react';
 
 export default function Guides() {
     const { setSelectedDoc, setActiveTab } = useWalletStore();
 
+    // FUNCTION TO OPEN A GUIDE 
     const openGuide = (id: string) => {
         setActiveTab('guides');
         setSelectedDoc(id);
     };
-
     return (
         <div className="sovereign-glass rounded-[50px] p-10 border-white/10 flex flex-col gap-10 shadow-2xl relative overflow-hidden">
             <div className="flex items-center gap-3">
                 <BookOpen size={20} className="text-[#f9d423]" />
-                <h3 className="text-[11px] font-black text-white uppercase tracking-[0.5em]">Neural_Knowledge_Base</h3>
+                <h3 className="text-[11px] font-black text-white uppercase tracking-[0.5em]">Guides </h3>
             </div>
-
             <div className="flex-1 flex flex-col gap-4">
                 <GuideBox
                     title="Biometric Auth"
@@ -39,16 +37,16 @@ export default function Guides() {
                     onClick={() => openGuide('persistence')}
                 />
             </div>
-
             <div className="mt-4 p-6 rounded-3xl bg-white/2 border border-white/5">
                 <p className="text-[10px] font-black text-white/30 uppercase tracking-widest leading-relaxed italic">
-                    Blueprints for the Sovereign Internet. Production-ready protocols for Solana v2.0.
+                    Explore step-by-step tutorials on integrating LazorKit&apos;s cutting-edge features into your Solana applications. 
                 </p>
             </div>
         </div>
     );
 }
 
+// GUIDE BOX COMPONENT 
 function GuideBox({ title, icon: Icon, color, onClick }: any) {
     return (
         <div onClick={onClick} className="p-6 rounded-[25px] bg-white/2 border border-white/5 hover:border-white/20 hover:bg-white/5 transition-all cursor-pointer group flex justify-between items-center">
