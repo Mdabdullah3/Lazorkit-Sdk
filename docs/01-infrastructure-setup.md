@@ -1,4 +1,4 @@
-# 🏗️ Tutorial 00: Infrastructure Setup
+# 🏗️ Tutorial 01: Infrastructure Setup
 
 ### Initializing the Sovereign SDK Protocol
 

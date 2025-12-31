@@ -7,7 +7,7 @@ LazorKit is a **premium, production-grade starter template** designed to help de
 This kit transforms complex blockchain interactions into a seamless, high-fidelity experience that eliminates the need for seed phrases and traditional wallet installations.
 
 **Live Demo:** [[Live Link](https://lazorkit-sdk.vercel.app/)]
-**Technical Briefing:** [[Medium Link](https://lazorkit-sdk.vercel.app/)]
+**Technical Briefing:** [[Medium Link](https://medium.com/@mdabdullah.dev/engineering-the-future-of-frictionless-solana-onboarding-8e4abdc3938a)]
 
 ---
 
@@ -79,4 +79,4 @@ Explore our deep-dive guides for developers:
 
 Traditional Web3 onboarding is broken. The requirement of 3rd party apps and 12-word recovery phrases prevents the next billion users from joining Solana. LazorKit Sovereign leverages hardware-bound Passkeys to bridge the gap between "Hacker-level" security and "Consumer-level" simplicity.
 
-**Built with passion for the Solana Ecosystem by MdAbdullah.** 
+**Built with passion for the Solana Ecosystem by MdAbdullah.**

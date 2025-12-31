@@ -40,7 +40,7 @@ export const useWalletStore = create()(
 );
 ```
 
-##⚡ Step 2: The Neural Recovery Hook
+## ⚡ Step 2: The Neural Recovery Hook
 
 Implement a global initializer that runs once when the app starts. This checks if the user's biometric link is still valid.
 
