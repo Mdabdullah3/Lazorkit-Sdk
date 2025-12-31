@@ -56,11 +56,6 @@ export default function AppInitializer() {
 
   useEffect(() => {
     const recoverSession = async () => {
-      /**
-       * 🚀 CORE PROTOCOL: getExistingWallet
-       * This method checks the device's internal storage
-       * for a previously registered LazorKit Passkey.
-       */
       const savedWallet = await getExistingWallet();
 
       if (savedWallet) {
@@ -72,7 +67,7 @@ export default function AppInitializer() {
     recoverSession();
   }, [setWallet]);
 
-  return null; // This is a logic-only component
+  return null; 
 }
 ```
 
