@@ -1,8 +1,7 @@
 "use client";
-import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { useState, useEffect } from 'react';
 import { useWalletStore } from '@/store/useWalletStore';
-import { Copy, LogOut, Zap, ShieldCheck, Database, Check, RefreshCw, Coins } from 'lucide-react';
+import { Copy, LogOut, ShieldCheck, Check, RefreshCw } from 'lucide-react';
 import { useWallet } from '@lazorkit/wallet';
 import { Connection, PublicKey } from '@solana/web3.js';
 
@@ -37,7 +36,7 @@ export default function WalletDashboard() {
       <div className="sovereign-glass rounded-[50px] p-10 flex flex-col gap-10 border-white/10 shadow-[0_40px_80px_rgba(0,0,0,1)] relative overflow-hidden group">
 
          {/* Refractive Light Sweep */}
-         <div className="absolute inset-0 bg-gradient-to-tr from-[#ff3e3e]/5 via-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+         <div className="absolute inset-0 bg-linear-to-tr from-[#ff3e3e]/5 via-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
 
          <div className="relative z-10 space-y-8">
             <div className="flex justify-between items-start">
@@ -46,19 +45,19 @@ export default function WalletDashboard() {
                      <ShieldCheck size={14} className="text-emerald-400" />
                      <span className="text-[10px] font-black text-emerald-400 uppercase tracking-[0.3em]">Verified_Identity</span>
                   </div>
-                  <h2 className="text-4xl font-[900] italic text-white uppercase tracking-tighter leading-none">Sovereign<br />Vault</h2>
+                  <h2 className="text-4xl font-black italic text-white uppercase tracking-tighter leading-none">Sovereign<br />Vault</h2>
                </div>
                <button onClick={async () => { await officialDisconnect(); clearStore(); }} className="p-4 rounded-2xl bg-white/5 border border-white/10 text-white/20 hover:text-rose-500 transition-all"><LogOut size={20} /></button>
             </div>
 
             {/* BALANCE MODULE */}
-            <div className="bg-gradient-to-br from-white/[0.03] to-transparent rounded-[35px] p-8 border border-white/5 flex flex-col gap-4">
+            <div className="bg-linear-to-br from-white/3 to-transparent rounded-[35px] p-8 border border-white/5 flex flex-col gap-4">
                <div className="flex justify-between items-center">
                   <span className="text-[9px] font-black text-white/20 uppercase tracking-[0.4em]">Available_Liquidity</span>
                   <button onClick={fetchBalance} className={isRefreshing ? "animate-spin" : ""}><RefreshCw size={14} className="text-white/20" /></button>
                </div>
                <div className="flex items-baseline gap-3">
-                  <span className="text-6xl font-[900] italic text-white tracking-tighter tabular-nums">
+                  <span className="text-6xl font-black italic text-white tracking-tighter tabular-nums">
                      {balance !== null ? balance.toFixed(3) : "0.000"}
                   </span>
                   <span className="text-xl font-black text-[#f9d423] italic">SOL</span>

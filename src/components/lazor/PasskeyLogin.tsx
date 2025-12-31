@@ -2,73 +2,105 @@
 "use client";
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Fingerprint, Loader2, ChevronRight, ShieldAlert } from 'lucide-react';
+import { Fingerprint, Loader2, ChevronRight, ShieldAlert, CheckCircle2 } from 'lucide-react';
 import { useWalletStore } from '@/store/useWalletStore';
-
-// ✅ IMPORT THE OFFICIAL HOOK
 import { useWallet } from '@lazorkit/wallet';
 
 export default function PasskeyLogin() {
     const { setWallet, setStatus, status } = useWalletStore();
-    const [localError, setLocalError] = useState<string | null>(null);
-
-    // ✅ EXTRACT THE OFFICIAL METHODS
     const { connect, isConnecting } = useWallet();
+    const [error, setError] = useState<string | null>(null);
 
     const handleAuth = async () => {
-        setLocalError(null);
+        setError(null);
         setStatus('connecting');
 
         try {
-            /** 
-             * 🛰️ OFFICIAL HANDSHAKE
-             * This triggers the portal.lazor.sh popup.
-             * If the user doesn't have an account, the portal will 
-             * automatically guide them to "Create Account".
-             */
+            // 📡 Trigger official biometric handshake
             const walletInfo = await connect({ feeMode: 'paymaster' });
 
-            // ✅ Mapping the official response (wallet.smartWallet) to your store
-            if (walletInfo && (walletInfo as any).smartWallet) {
-                setWallet((walletInfo as any).smartWallet);
-                setStatus('connected');
-                console.log("Sovereign Identity Created:", (walletInfo as any).smartWallet);
-            }
+            // Handle the address mapping from the SDK response
+            const address = (walletInfo as any)?.address || (walletInfo as any)?.smartWallet;
 
+            if (address) {
+                setWallet(address);
+                setStatus('connected');
+            }
         } catch (err: any) {
-            console.error("Biometric Handshake Failed:", err);
-            setLocalError("Handshake_Rejected");
+            console.error("Handshake Protocol Rejected:", err);
+            setError(err.message?.includes("cancel") ? "Handshake_Cancelled" : "Handshake_Error");
             setStatus('error');
         }
     };
 
     return (
-        <div className="flex flex-col items-center gap-6 w-full">
+        <div className="flex flex-col items-center gap-6 w-full max-w-sm mx-auto">
+
             <motion.button
-                whileHover={{ scale: 1.05 }}
+                whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 onClick={handleAuth}
                 disabled={isConnecting}
-                className="relative w-full group outline-none"
+                className="relative w-full group"
             >
-                {/* ... (Your beautiful UI code stays the same) ... */}
-                <div className="relative px-8 py-6 bg-[#050508] border border-white/20 rounded-full flex items-center justify-between shadow-2xl overflow-hidden">
+                {/* 1. THE PRISM BORDER (Cyan via White to Fuchsia) */}
+                <div className="absolute -inset-[1.5px] bg-linear-to-r from-[#00f2ff] via-white to-[#ff3e3e] rounded-full opacity-20 group-hover:opacity-100 transition-opacity duration-500 blur-[2px]" />
+
+                {/* 2. THE MAIN BODY */}
+                <div className="relative px-8 py-6 bg-[#050508] border border-white/10 rounded-full flex items-center justify-between shadow-2xl overflow-hidden">
+
+                    {/* Refractive Light Sweep */}
+                    <div className="absolute inset-0 bg-linear-to-r from-transparent via-white/3 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
+
                     <div className="flex items-center gap-4 relative z-10">
-                        <div className="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center">
-                            {isConnecting ? <Loader2 className="animate-spin text-[#f83a99]" /> : <Fingerprint size={24} className="text-white" />}
+                        {/* Icon HUD */}
+                        <div className="w-12 h-12 rounded-full bg-white/3 border border-white/10 flex items-center justify-center">
+                            <AnimatePresence mode="wait">
+                                {isConnecting ? (
+                                    <motion.div key="loading" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+                                        <Loader2 className="animate-spin text-[#f83a99]" size={22} />
+                                    </motion.div>
+                                ) : (
+                                    <motion.div key="idle" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+                                        <Fingerprint className="text-white group-hover:text-cyan-400 transition-colors" size={24} strokeWidth={1.5} />
+                                    </motion.div>
+                                )}
+                            </AnimatePresence>
                         </div>
+
+                        {/* Labeling */}
                         <div className="text-left">
-                            <span className="block text-[8px] font-black text-[#ff8c42] uppercase tracking-[0.4em] mb-0.5">Authorization_Protocol</span>
-                            <span className="text-sm font-[900] text-white uppercase tracking-widest italic">
-                                {isConnecting ? 'Check Popup Window' : 'Initialize Wallet'}
+                            <span className="block text-[8px] font-black text-white/30 uppercase tracking-[0.4em] mb-0.5 italic">
+                                {isConnecting ? 'Verifying_Hardware' : 'Secure_Handshake'}
+                            </span>
+                            <span className="text-sm font-black text-white uppercase tracking-widest italic">
+                                {isConnecting ? 'Check Device' : 'Initialize Wallet'}
                             </span>
                         </div>
                     </div>
-                    <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center text-black group-hover:bg-[#ff3e3e] group-hover:text-white transition-all relative z-10 shadow-lg">
-                        <ChevronRight size={20} strokeWidth={3} />
+
+                    {/* Action Indicator */}
+                    <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center text-black group-hover:bg-[#ff3e3e] group-hover:text-white transition-all shadow-lg relative z-10">
+                        {status === 'connected' ? <CheckCircle2 size={18} strokeWidth={3} /> : <ChevronRight size={20} strokeWidth={3} />}
                     </div>
                 </div>
             </motion.button>
+
+            {/* 3. ERROR FEEDBACK HUD */}
+            <AnimatePresence>
+                {error && (
+                    <motion.div
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0 }}
+                        className="flex items-center gap-2 text-[#ff3e3e] font-mono text-[9px] uppercase tracking-[0.3em] italic"
+                    >
+                        <ShieldAlert size={12} />
+                        {error}
+                    </motion.div>
+                )}
+            </AnimatePresence>
+
         </div>
     );
 }
