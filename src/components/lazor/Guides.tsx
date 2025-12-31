@@ -40,7 +40,7 @@ export default function Guides() {
                 />
             </div>
 
-            <div className="mt-4 p-6 rounded-3xl bg-white/[0.02] border border-white/5">
+            <div className="mt-4 p-6 rounded-3xl bg-white/2 border border-white/5">
                 <p className="text-[10px] font-black text-white/30 uppercase tracking-widest leading-relaxed italic">
                     Blueprints for the Sovereign Internet. Production-ready protocols for Solana v2.0.
                 </p>
@@ -51,7 +51,7 @@ export default function Guides() {
 
 function GuideBox({ title, icon: Icon, color, onClick }: any) {
     return (
-        <div onClick={onClick} className="p-6 rounded-[25px] bg-white/[0.02] border border-white/5 hover:border-white/20 hover:bg-white/[0.05] transition-all cursor-pointer group flex justify-between items-center">
+        <div onClick={onClick} className="p-6 rounded-[25px] bg-white/2 border border-white/5 hover:border-white/20 hover:bg-white/5 transition-all cursor-pointer group flex justify-between items-center">
             <div className="flex items-center gap-5">
                 <div className={`p-3 rounded-xl bg-black/40 border border-white/5 group-hover:border-white/20 transition-all ${color}`}>
                     <Icon size={20} />

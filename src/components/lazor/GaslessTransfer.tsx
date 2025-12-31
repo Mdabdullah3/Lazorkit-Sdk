@@ -42,7 +42,7 @@ export default function GaslessTransfer() {
                     <Zap size={24} />
                 </div>
                 <div>
-                    <h3 className="text-xl font-[900] italic text-white uppercase tracking-tight">Ghost Relay</h3>
+                    <h3 className="text-xl font-black italic text-white uppercase tracking-tight">Ghost Relay</h3>
                     <span className="text-[9px] font-black text-white/30 uppercase tracking-[0.4em]">Gasless_Transmission_v1</span>
                 </div>
             </div>
@@ -62,7 +62,7 @@ export default function GaslessTransfer() {
                 <button
                     onClick={handleTransfer}
                     disabled={loading}
-                    className="w-full h-20 bg-gradient-to-r from-[#ff3e3e] via-[#f83a99] to-[#f9d423] text-black font-[900] uppercase text-sm tracking-[0.3em] rounded-[30px] shadow-[0_20px_40px_rgba(255,62,62,0.3)] hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-4 group disabled:opacity-50"
+                    className="w-full h-20 bg-linear-to-r from-[#ff3e3e] via-[#f83a99] to-[#f9d423] text-black font-black uppercase text-sm tracking-[0.3em] rounded-[30px] shadow-[0_20px_40px_rgba(255,62,62,0.3)] hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-4 group disabled:opacity-50"
                 >
                     {loading ? <Loader2 className="animate-spin" /> : <><Send size={20} className="group-hover:translate-x-2 group-hover:-translate-y-2 transition-transform" /> Confirm_Transaction</>}
                 </button>

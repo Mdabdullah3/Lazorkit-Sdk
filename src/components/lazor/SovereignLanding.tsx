@@ -2,7 +2,7 @@
 "use client";
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Shield, Zap, Lock, Fingerprint, Activity, Share2, Code2, Key } from 'lucide-react';
+import { Shield, Zap, Lock, Fingerprint, Share2, Code2, Key } from 'lucide-react';
 import PasskeyLogin from './PasskeyLogin';
 
 export default function SovereignLanding() {
@@ -121,7 +121,7 @@ export default function SovereignLanding() {
                 <div className="flex items-center gap-10">
                     <div className="flex items-center gap-3 px-5 py-2 rounded-2xl bg-white/5 border border-white/10 shadow-2xl">
                         <span className="text-[8px] font-black text-white/30 uppercase tracking-widest leading-none">Built_By</span>
-                        <span className="text-[11px] font-[900] italic text-transparent bg-clip-text bg-gradient-to-r from-[#ff3e3e] via-white to-[#f9d423] uppercase">
+                        <span className="text-[11px] font-black italic text-transparent bg-clip-text bg-linear-to-r from-[#ff3e3e] via-white to-[#f9d423] uppercase">
                             MdAbdullah
                         </span>
                     </div>
@@ -136,7 +136,7 @@ function QuickStat({ label, value, color }: any) {
     return (
         <div className="flex flex-col gap-1 items-center lg:items-start group cursor-crosshair">
             <span className="text-[9px] font-black text-white/20 uppercase tracking-[0.3em]">{label}</span>
-            <span className={`text-3xl font-[900] italic tracking-tighter uppercase ${color} transition-all group-hover:scale-110`}>
+            <span className={`text-3xl font-black italic tracking-tighter uppercase ${color} transition-all group-hover:scale-110`}>
                 {value}
             </span>
         </div>
