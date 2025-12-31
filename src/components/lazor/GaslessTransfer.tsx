@@ -1,103 +1,80 @@
-/* ✅ UPDATED WITH BASE58 VALIDATION */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import React, { useState } from 'react';
 import { useWallet } from '@lazorkit/wallet';
 import { SystemProgram, PublicKey, LAMPORTS_PER_SOL } from '@solana/web3.js';
-import { Send, Zap, Loader2, CheckCircle, AlertTriangle } from 'lucide-react';
+import { Send, Zap, Loader2, CheckCircle, AlertTriangle, ExternalLink } from 'lucide-react';
 
 export default function GaslessTransfer() {
     const { signAndSendTransaction, smartWalletPubkey } = useWallet();
     const [loading, setLoading] = useState(false);
     const [recipient, setRecipient] = useState("");
     const [txSig, setTxSig] = useState<string | null>(null);
-    const [localError, setLocalError] = useState<string | null>(null);
+    const [error, setError] = useState<string | null>(null);
 
     const handleTransfer = async () => {
-        setLocalError(null);
-        setTxSig(null);
-
-        // 1. Basic Validation
-        if (!recipient.trim()) return setLocalError("Address_Required");
-        if (!smartWalletPubkey) return setLocalError("Wallet_Not_Connected");
-
+        if (!recipient.trim()) return setError("Destination_Required");
+        setError(null);
         setLoading(true);
 
         try {
-            /**
-             * 🛡️ THE FIX: validate the address string
-             * We trim it to remove spaces and wrap it in a try/catch
-             */
-            const cleanAddress = recipient.trim();
-            const destination = new PublicKey(cleanAddress);
-
+            const destination = new PublicKey(recipient.trim());
             const instruction = SystemProgram.transfer({
-                fromPubkey: smartWalletPubkey,
+                fromPubkey: smartWalletPubkey!,
                 toPubkey: destination,
-                lamports: 0.001 * LAMPORTS_PER_SOL,
+                lamports: 0.005 * LAMPORTS_PER_SOL,
             });
 
             const signature = await signAndSendTransaction({
                 instructions: [instruction],
-                transactionOptions: {
-                    feeToken: 'USDC',
-                    clusterSimulation: 'devnet'
-                }
+                transactionOptions: { feeToken: 'USDC' }
             });
-
             setTxSig(signature);
-        } catch (error: any) {
-            console.error('Relay failed:', error);
-
-            // ✅ Catch the "Non-base58" error specifically
-            if (error.message?.includes("base58")) {
-                setLocalError("Invalid_Solana_Address_Format");
-            } else {
-                setLocalError("Handshake_Simulation_Failed");
-            }
-        } finally {
-            setLoading(false);
-        }
+        } catch (err: any) {
+            setError(err.message?.includes("base58") ? "Invalid_Address_Format" : "Relay_Protocol_Failure");
+        } finally { setLoading(false); }
     };
 
     return (
-        <div className="sovereign-glass rounded-[40px] p-10 border-white/5 flex flex-col gap-6">
-            <div className="flex items-center gap-3">
-                <Zap size={20} className="text-fuchsia-500" />
-                <h3 className="text-[11px] font-black text-white uppercase tracking-[0.4em]">Gasless_Relay_Module</h3>
+        <div className="sovereign-glass rounded-[50px] p-10 flex flex-col gap-8 border-white/10 shadow-2xl relative overflow-hidden">
+            <div className="flex items-center gap-4">
+                <div className="w-12 h-12 rounded-2xl bg-[#ff3e3e]/10 flex items-center justify-center text-[#ff3e3e] border border-[#ff3e3e]/20 shadow-[0_0_20px_rgba(255,62,62,0.2)]">
+                    <Zap size={24} />
+                </div>
+                <div>
+                    <h3 className="text-xl font-[900] italic text-white uppercase tracking-tight">Ghost Relay</h3>
+                    <span className="text-[9px] font-black text-white/30 uppercase tracking-[0.4em]">Gasless_Transmission_v1</span>
+                </div>
             </div>
 
-            <div className="space-y-2">
-                <input
-                    value={recipient}
-                    onChange={(e) => setRecipient(e.target.value)}
-                    placeholder="RECIPIENT_PUBKEY..."
-                    className={`w-full h-14 bg-black/40 border rounded-2xl px-6 text-[10px] font-mono text-white outline-none transition-all ${localError ? 'border-red-500/50' : 'border-white/10 focus:border-fuchsia-500'}`}
-                />
-                {localError && (
-                    <p className="text-[9px] text-red-500 font-mono flex items-center gap-1 ml-2">
-                        <AlertTriangle size={10} /> {localError}
-                    </p>
-                )}
-            </div>
+            <div className="space-y-6">
+                <div className="space-y-3">
+                    <label className="text-[10px] font-black text-white/30 uppercase tracking-[0.3em] ml-2 italic">Recipient_Endpoint</label>
+                    <input
+                        value={recipient}
+                        onChange={(e) => setRecipient(e.target.value)}
+                        placeholder="PASTE_SOLANA_ADDRESS..."
+                        className={`w-full h-16 bg-black border rounded-[25px] px-8 text-xs font-mono text-white outline-none transition-all ${error ? 'border-red-500/50 shadow-[0_0_20px_rgba(239,68,68,0.1)]' : 'border-white/10 focus:border-[#f83a99]/50'}`}
+                    />
+                    {error && <p className="text-[9px] text-red-500 font-black uppercase tracking-widest ml-4 flex items-center gap-2 animate-pulse"><AlertTriangle size={12} /> {error}</p>}
+                </div>
 
-            <button
-                onClick={handleTransfer}
-                disabled={loading}
-                className="w-full h-16 bg-gradient-to-r from-fuchsia-600 to-purple-700 text-white font-black uppercase text-xs rounded-2xl flex items-center justify-center gap-3 shadow-2xl hover:scale-[1.02] active:scale-95 transition-all"
-            >
-                {loading ? <Loader2 className="animate-spin" /> : <><Send size={16} /> Execute Ghost Transfer</>}
-            </button>
+                <button
+                    onClick={handleTransfer}
+                    disabled={loading}
+                    className="w-full h-20 bg-gradient-to-r from-[#ff3e3e] via-[#f83a99] to-[#f9d423] text-black font-[900] uppercase text-sm tracking-[0.3em] rounded-[30px] shadow-[0_20px_40px_rgba(255,62,62,0.3)] hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-4 group disabled:opacity-50"
+                >
+                    {loading ? <Loader2 className="animate-spin" /> : <><Send size={20} className="group-hover:translate-x-2 group-hover:-translate-y-2 transition-transform" /> Confirm_Transaction</>}
+                </button>
+            </div>
 
             {txSig && (
-                <div className="p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-[9px] font-mono break-all group">
-                    <CheckCircle size={12} className="inline mr-2" />
-                    TX_CONFIRMED: {txSig.slice(0, 20)}...
-                    <a
-                        href={`https://solscan.io/tx/${txSig}?cluster=devnet`}
-                        target="_blank"
-                        className="block mt-2 text-cyan-400 underline hover:text-white"
-                    >
-                        View_on_Solscan
+                <div className="p-6 rounded-3xl bg-emerald-500/5 border border-emerald-500/20 text-emerald-400 flex flex-col gap-3">
+                    <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest">
+                        <CheckCircle size={14} /> Handshake_Confirmed
+                    </div>
+                    <a href={`https://solscan.io/tx/${txSig}?cluster=devnet`} target="_blank" className="flex items-center gap-2 text-[11px] font-mono underline decoration-emerald-500/30 hover:text-white transition-all">
+                        VIEW_ON_EXPLORER <ExternalLink size={12} />
                     </a>
                 </div>
             )}

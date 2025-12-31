@@ -1,52 +1,64 @@
-import { useWalletStore } from "@/store/useWalletStore";
-import { ArrowUpRight } from "lucide-react";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+"use client";
+import React from 'react';
+import { useWalletStore } from '@/store/useWalletStore';
+import { BookOpen, ChevronRight, Binary, Fingerprint, Zap } from 'lucide-react';
 
-// The individual item component
-function GuideItem({ title, desc, onClick }: { title: string, desc: string, onClick: () => void }) {
-    return (
-        <div
-            onClick={onClick}
-            className="p-5 rounded-2xl bg-white/5 border border-white/5 hover:border-cyan-500/30 transition-all cursor-pointer group"
-        >
-            <div className="flex justify-between items-start">
-                <div className="space-y-1">
-                    <h4 className="text-sm font-black text-white uppercase italic tracking-tight group-hover:text-cyan-400 transition-colors">
-                        {title}
-                    </h4>
-                    <p className="text-[10px] text-white/30 uppercase font-bold">
-                        {desc}
-                    </p>
-                </div>
-                <ArrowUpRight size={16} className="text-white/10 group-hover:text-cyan-400" />
-            </div>
-        </div>
-    );
-}
-
-// The main Guides component
 export default function Guides() {
     const { setSelectedDoc, setActiveTab } = useWalletStore();
 
-    const handleOpenDoc = (id: string) => {
+    const openGuide = (id: string) => {
         setActiveTab('guides');
         setSelectedDoc(id);
     };
 
     return (
-        <div className="sovereign-glass rounded-[40px] p-10 border-white/5 flex flex-col h-full">
-            <h3 className="text-[11px] font-black text-white uppercase tracking-[0.4em] mb-8 italic">Knowledge_Base</h3>
-            <div className="space-y-4">
-                <GuideItem
-                    title="Passkey Integration"
-                    desc="Handshake Tutorial"
-                    onClick={() => handleOpenDoc('passkey')}
+        <div className="sovereign-glass rounded-[50px] p-10 border-white/10 flex flex-col gap-10 shadow-2xl relative overflow-hidden">
+            <div className="flex items-center gap-3">
+                <BookOpen size={20} className="text-[#f9d423]" />
+                <h3 className="text-[11px] font-black text-white uppercase tracking-[0.5em]">Neural_Knowledge_Base</h3>
+            </div>
+
+            <div className="flex-1 flex flex-col gap-4">
+                <GuideBox
+                    title="Biometric Auth"
+                    icon={Fingerprint}
+                    color="text-cyan-400"
+                    onClick={() => openGuide('passkey')}
                 />
-                <GuideItem
+                <GuideBox
                     title="Gasless Relay"
-                    desc="Ghost Tx Tutorial"
-                    onClick={() => handleOpenDoc('gasless')}
+                    icon={Zap}
+                    color="text-fuchsia-500"
+                    onClick={() => openGuide('gasless')}
+                />
+                <GuideBox
+                    title="SDK Persistence"
+                    icon={Binary}
+                    color="text-emerald-400"
+                    onClick={() => openGuide('persistence')}
                 />
             </div>
+
+            <div className="mt-4 p-6 rounded-3xl bg-white/[0.02] border border-white/5">
+                <p className="text-[10px] font-black text-white/30 uppercase tracking-widest leading-relaxed italic">
+                    Blueprints for the Sovereign Internet. Production-ready protocols for Solana v2.0.
+                </p>
+            </div>
+        </div>
+    );
+}
+
+function GuideBox({ title, icon: Icon, color, onClick }: any) {
+    return (
+        <div onClick={onClick} className="p-6 rounded-[25px] bg-white/[0.02] border border-white/5 hover:border-white/20 hover:bg-white/[0.05] transition-all cursor-pointer group flex justify-between items-center">
+            <div className="flex items-center gap-5">
+                <div className={`p-3 rounded-xl bg-black/40 border border-white/5 group-hover:border-white/20 transition-all ${color}`}>
+                    <Icon size={20} />
+                </div>
+                <span className="text-sm font-black italic text-white uppercase tracking-tight group-hover:text-white transition-colors">{title}</span>
+            </div>
+            <ChevronRight size={18} className="text-white/10 group-hover:text-white transition-all" />
         </div>
     );
 }
